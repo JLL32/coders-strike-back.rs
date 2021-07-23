@@ -1,11 +1,6 @@
-use std::io::prelude::*;
 use std::io;
+use std::io::{prelude::*, Stdin};
 
-macro_rules! parse_input {
-    ($x:expr, $t:ident) => {
-        $x.trim().parse::<$t>().unwrap()
-    };
-}
 
 struct NextCheckPoint {
     pos: Pos,
@@ -31,27 +26,28 @@ impl NextCheckPoint {
     }
 }
 
+fn get_inputs(stdin: Stdin) -> Vec<i32> {
+    let input_line = stdin.lock().lines().next().unwrap().unwrap();
+    input_line
+        .split(" ")
+        .map(|e| e.trim().parse::<i32>().unwrap())
+        .collect::<Vec<_>>()
+}
+
 #[allow(unused)]
 fn main() {
     // game loop
     loop {
-        let mut input_line = io::stdin().lock().lines().next().unwrap().unwrap();
-        let inputs = input_line
-            .split(" ")
-            .map(|e| parse_input!(e, i32))
-            .collect::<Vec<_>>();
+        let inputs = get_inputs(io::stdin());
 
         let curr_pos = Pos {
             x: inputs[0],
             y: inputs[1],
         };
+
         let next_checkpoint = NextCheckPoint::from_slice(&inputs[2..=5]);
 
-        let mut input_line = io::stdin().lock().lines().next().unwrap().unwrap();
-        let inputs = input_line
-            .split(" ")
-            .map(|e| parse_input!(e, i32))
-            .collect::<Vec<_>>();
+        let inputs = get_inputs(io::stdin());
 
         let opponent_pos = Pos {
             x: inputs[0],
