@@ -1,7 +1,6 @@
 use std::io;
 use std::io::{prelude::*, Stdin};
 
-
 struct NextCheckPoint {
     pos: Pos,
     dist: i32,
@@ -27,9 +26,13 @@ impl NextCheckPoint {
 }
 
 fn get_inputs(stdin: Stdin) -> Vec<i32> {
-    let input_line = stdin.lock().lines().next().unwrap().unwrap();
-    input_line
-        .split(" ")
+    stdin
+        .lock()
+        .lines()
+        .next()
+        .unwrap()
+        .unwrap()
+        .split(' ')
         .map(|e| e.trim().parse::<i32>().unwrap())
         .collect::<Vec<_>>()
 }
